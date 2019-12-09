@@ -204,7 +204,7 @@ class RestController extends \CI_Controller
         self::HTTP_NOT_FOUND => 'NOT FOUND',
         self::HTTP_METHOD_NOT_ALLOWED => 'METHOD NOT ALLOWED',
         self::HTTP_NOT_ACCEPTABLE => 'NOT ACCEPTABLE',
-        self::HTTP_INTERNAL_SERVER_ERROR => 'INTERNAL SERVER ERROR'
+        self::HTTP_INTERNAL_ERROR => 'INTERNAL SERVER ERROR'
     ];
 
     /**
