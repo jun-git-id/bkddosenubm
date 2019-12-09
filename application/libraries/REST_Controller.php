@@ -348,7 +348,7 @@ class RestController extends \CI_Controller
             $this->response([
                 $this->config->item('rest_status_field_name')  => false,
                 $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_ajax_only'),
-            ], HTTP_NOT_ACCEPTABLE);
+            ], self::HTTP_NOT_ACCEPTABLE);
         }
         // When there is no specific override for the current class/method, use the default auth value set in the config
         if ($this->auth_override === false &&
@@ -427,7 +427,7 @@ class RestController extends \CI_Controller
             $this->response([
                 $this->config->item('rest_status_field_name')  => false,
                 $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_unsupported'),
-            ], HTTP_FORBIDDEN);
+            ], self::HTTP_FORBIDDEN);
         }
         // Remove the supported format from the function name e.g. index.json => index
         $object_called = preg_replace('/^(.*)\.(?:'.implode('|', array_keys($this->_supported_formats)).')$/', '$1', $object_called);
@@ -453,7 +453,7 @@ class RestController extends \CI_Controller
             $this->response([
                 $this->config->item('rest_status_field_name')  => false,
                 $this->config->item('rest_message_field_name') => sprintf($this->lang->line('text_rest_invalid_api_key'), $this->rest->key),
-            ], HTTP_FORBIDDEN);
+            ], self::HTTP_FORBIDDEN);
         }
         // Check to see if this key has access to the requested controller
         if ($this->config->item('rest_enable_keys') && $use_key && empty($this->rest->key) === false && $this->_check_access() === false) {
@@ -463,21 +463,21 @@ class RestController extends \CI_Controller
             $this->response([
                 $this->config->item('rest_status_field_name')  => false,
                 $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_api_key_unauthorized'),
-            ], HTTP_UNAUTHORIZED);
+            ], self::HTTP_UNAUTHORIZED);
         }
         // Sure it exists, but can they do anything with it?
         if (!method_exists($this, $controller_method)) {
             $this->response([
                 $this->config->item('rest_status_field_name')  => false,
                 $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_unknown_method'),
-            ], HTTP_METHOD_NOT_ALLOWED);
+            ], self::HTTP_METHOD_NOT_ALLOWED);
         }
         // Doing key related stuff? Can only do it if they have a key right?
         if ($this->config->item('rest_enable_keys') && empty($this->rest->key) === false) {
             // Check the limit
             if ($this->config->item('rest_enable_limits') && $this->_check_limit($controller_method) === false) {
                 $response = [$this->config->item('rest_status_field_name') => false, $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_api_key_time_limit')];
-                $this->response($response, HTTP_UNAUTHORIZED);
+                $this->response($response, self::HTTP_UNAUTHORIZED);
             }
             // If no level is set use 0, they probably aren't using permissions
             $level = isset($this->methods[$controller_method]['level']) ? $this->methods[$controller_method]['level'] : 0;
@@ -490,13 +490,13 @@ class RestController extends \CI_Controller
             if ($authorized === false) {
                 // They don't have good enough perms
                 $response = [$this->config->item('rest_status_field_name') => false, $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_api_key_permissions')];
-                $this->response($response, HTTP_UNAUTHORIZED);
+                $this->response($response, self::HTTP_UNAUTHORIZED);
             }
         }
         //check request limit by ip without login
         elseif ($this->config->item('rest_limits_method') == 'IP_ADDRESS' && $this->config->item('rest_enable_limits') && $this->_check_limit($controller_method) === false) {
             $response = [$this->config->item('rest_status_field_name') => false, $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_ip_address_time_limit')];
-            $this->response($response, HTTP_UNAUTHORIZED);
+            $this->response($response, self::HTTP_UNAUTHORIZED);
         }
         // No key stuff, but record that stuff is happening
         elseif ($this->config->item('rest_enable_logging') && $log_method) {
@@ -1445,7 +1445,7 @@ class RestController extends \CI_Controller
             $this->response([
                 $this->config->item('rest_status_field_name')  => false,
                 $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_unauthorized'),
-            ], HTTP_UNAUTHORIZED);
+            ], self::HTTP_UNAUTHORIZED);
         }
     }
     /**
@@ -1517,7 +1517,7 @@ class RestController extends \CI_Controller
             $this->response([
                 $this->config->item('rest_status_field_name')  => false,
                 $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_invalid_credentials'),
-            ], HTTP_UNAUTHORIZED);
+            ], self::HTTP_UNAUTHORIZED);
         }
     }
     /**
@@ -1535,7 +1535,7 @@ class RestController extends \CI_Controller
             $this->response([
                 $this->config->item('rest_status_field_name')  => false,
                 $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_ip_denied'),
-            ], HTTP_UNAUTHORIZED);
+            ], self::HTTP_UNAUTHORIZED);
         }
     }
     /**
@@ -1556,7 +1556,7 @@ class RestController extends \CI_Controller
             $this->response([
                 $this->config->item('rest_status_field_name')  => false,
                 $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_ip_unauthorized'),
-            ], HTTP_UNAUTHORIZED);
+            ], self::HTTP_UNAUTHORIZED);
         }
     }
     /**
@@ -1588,7 +1588,7 @@ class RestController extends \CI_Controller
         $this->response([
             $this->config->item('rest_status_field_name')  => false,
             $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_unauthorized'),
-        ], HTTP_UNAUTHORIZED);
+        ], self::HTTP_UNAUTHORIZED);
     }
     /**
      * Updates the log table with the total access time.
