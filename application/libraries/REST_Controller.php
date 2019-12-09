@@ -197,7 +197,6 @@ class RestController extends \CI_Controller
     protected $http_status_codes = [
         self::HTTP_OK => 'OK',
         self::HTTP_CREATED => 'CREATED',
-        self::HTTP_NO_CONTENT => 'NO CONTENT',
         self::HTTP_NOT_MODIFIED => 'NOT MODIFIED',
         self::HTTP_BAD_REQUEST => 'BAD REQUEST',
         self::HTTP_UNAUTHORIZED => 'UNAUTHORIZED',
@@ -205,9 +204,7 @@ class RestController extends \CI_Controller
         self::HTTP_NOT_FOUND => 'NOT FOUND',
         self::HTTP_METHOD_NOT_ALLOWED => 'METHOD NOT ALLOWED',
         self::HTTP_NOT_ACCEPTABLE => 'NOT ACCEPTABLE',
-        self::HTTP_CONFLICT => 'CONFLICT',
-        self::HTTP_INTERNAL_SERVER_ERROR => 'INTERNAL SERVER ERROR',
-        self::HTTP_NOT_IMPLEMENTED => 'NOT IMPLEMENTED'
+        self::HTTP_INTERNAL_SERVER_ERROR => 'INTERNAL SERVER ERROR'
     ];
 
     /**
