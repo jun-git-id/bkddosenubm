@@ -193,6 +193,23 @@ class RestController extends \CI_Controller
     const HTTP_METHOD_NOT_ALLOWED = 405;
     const HTTP_NOT_ACCEPTABLE = 406;
     const HTTP_INTERNAL_ERROR = 500;
+
+    protected $http_status_codes = [
+        self::HTTP_OK => 'OK',
+        self::HTTP_CREATED => 'CREATED',
+        self::HTTP_NO_CONTENT => 'NO CONTENT',
+        self::HTTP_NOT_MODIFIED => 'NOT MODIFIED',
+        self::HTTP_BAD_REQUEST => 'BAD REQUEST',
+        self::HTTP_UNAUTHORIZED => 'UNAUTHORIZED',
+        self::HTTP_FORBIDDEN => 'FORBIDDEN',
+        self::HTTP_NOT_FOUND => 'NOT FOUND',
+        self::HTTP_METHOD_NOT_ALLOWED => 'METHOD NOT ALLOWED',
+        self::HTTP_NOT_ACCEPTABLE => 'NOT ACCEPTABLE',
+        self::HTTP_CONFLICT => 'CONFLICT',
+        self::HTTP_INTERNAL_SERVER_ERROR => 'INTERNAL SERVER ERROR',
+        self::HTTP_NOT_IMPLEMENTED => 'NOT IMPLEMENTED'
+    ];
+
     /**
      * @var Format
      */
@@ -558,7 +575,7 @@ class RestController extends \CI_Controller
             // If not greater than zero, then set the HTTP status code as 200 by default
             // Though perhaps 500 should be set instead, for the developer not passing a
             // correct HTTP status code
-            $http_code > 0 || $http_code = HTTP_OK;
+            $http_code > 0 || $http_code = self::HTTP_OK;
             $this->output->set_status_header($http_code);
             // JC: Log response code only if rest logging enabled
             if ($this->config->item('rest_enable_logging') === true) {
