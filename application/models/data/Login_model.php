@@ -17,7 +17,7 @@ class Login_model extends CI_Model {
                     ->row_array();
 
     if(!empty($get['id_dosen']))
-      return ['result'  => [$get]];
+      return ['result'  => $get];
     else
       return ['error' => 'Username atau Password salah.'];
 	}
