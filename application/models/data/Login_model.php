@@ -8,7 +8,7 @@ class Login_model extends CI_Model {
 	}
 
 	public function index(){	
-    $get = $this->db->select('b.id_dosen, b.foto')
+    $get = $this->db->select('b.id_dosen, b.nama_dosen, b.email_dosen, b.foto')
                     ->from('user_login a')
                     ->join('dosen b', 'a.email = b.email_dosen')
                     ->where('email', $this->input->post('username'))
