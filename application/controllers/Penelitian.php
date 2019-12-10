@@ -26,7 +26,7 @@ class Penelitian extends API_Controller {
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
-				$data,
+				$data
 			);
 		}
 	}
@@ -38,7 +38,7 @@ class Penelitian extends API_Controller {
 				self::response_failed(
 					SELF::HTTP_INTERNAL_ERROR,
 					'Validation error',
-					$data,
+					$data
 				);
 			} else {
 				self::response_ok('OK', $data);
@@ -48,7 +48,7 @@ class Penelitian extends API_Controller {
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
-				$data,
+				$data
 			);
 		}
 	}
