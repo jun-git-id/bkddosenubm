@@ -23,8 +23,7 @@ class Mata_kuliah extends API_Controller {
 			self::response_ok('OK', $data);
 		} else {
 			$data['error']    = $this->form_validation->error_array();
-			self::response_failed(
-				SELF::HTTP_INTERNAL_ERROR,
+			self::response_ok(
 				'Validation error',
 				$data
 			);
@@ -45,9 +44,8 @@ class Mata_kuliah extends API_Controller {
 				self::response_ok('OK',$data);
 			}
 		} else {
-			$data['error'] = $this->form_validation->error_array();
-			self::response_failed(
-				SELF::HTTP_INTERNAL_ERROR,
+			$data['result'] = $this->form_validation->error_array();
+			self::response_ok(
 				'Validation error',
 				$data
 			);
