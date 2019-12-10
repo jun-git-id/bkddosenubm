@@ -59,7 +59,7 @@ class Mata_kuliah_model extends CI_Model {
 				return $data;
 			}
 			else 
-				return ['error' => 'Data gagal ditambahkan'];
+				return ['result' => ['Data gagal ditambahkan']];
 		} else {
 			$update = $this->db->update('mata_kuliah', $data, $where);
 			if($update == true) {
@@ -67,7 +67,7 @@ class Mata_kuliah_model extends CI_Model {
 				return $data; 
 			}
 			else 
-				return ['error' => 'Data gagal diubah'];
+				return ['result' => ['Data gagal diubah']];
 		}
 	}
 
@@ -80,6 +80,6 @@ class Mata_kuliah_model extends CI_Model {
 			return $data; 
 		}
 		else 
-			return ['error' => 'Data gagal dihapus'];
+			return ['result' => ['Data gagal dihapus']];
 	}
 }
