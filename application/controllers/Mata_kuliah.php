@@ -35,7 +35,7 @@ class Mata_kuliah extends API_Controller {
 	    $_POST = json_decode(file_get_contents("php://input"), true);
 		if ($this->mata_kuliah_validation->add()) {
 			$data = $this->mata_kuliah_model->add();
-			if(array_key_exists('result', $data)){
+			if(array_key_exists('error', $data['result'])){
 				self::response_failed(
 					SELF::HTTP_INTERNAL_ERROR,
 					'Validation error',
@@ -58,7 +58,7 @@ class Mata_kuliah extends API_Controller {
 		$_POST = json_decode(file_get_contents("php://input"), true);
 		if ($this->mata_kuliah_validation->delete()) {
 			$data = $this->mata_kuliah_model->delete();
-			if(array_key_exists('error', $data)){
+			if(array_key_exists('error', $data['result'])){
 				self::response_failed(
 					SELF::HTTP_INTERNAL_ERROR,
 					'Validation error',
