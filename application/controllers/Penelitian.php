@@ -22,7 +22,7 @@ class Penelitian extends API_Controller {
 			$data = $this->penelitian_model->detail();
 			self::response_ok('OK', $data);
 		} else {
-			$data['error']    = $this->form_validation->error_array();
+			$data['error']    = [$this->form_validation->error_array()];
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
@@ -34,7 +34,7 @@ class Penelitian extends API_Controller {
 	public function index_post() {
 		if ($this->penelitian_validation->add() == true) {
 			$data = $this->penelitian_model->add();
-			if(array_key_exists('error', $data)){
+			if(array_key_exists('error', $data['result'])){
 				self::response_failed(
 					SELF::HTTP_INTERNAL_ERROR,
 					'Validation error',
@@ -44,7 +44,7 @@ class Penelitian extends API_Controller {
 				self::response_ok('OK', $data);
 			}
 		} else {
-			$data['error']    = $this->form_validation->error_array();
+			$data['error']    = [$this->form_validation->error_array()];
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
@@ -53,17 +53,25 @@ class Penelitian extends API_Controller {
 		}
 	}
 
-	public function index_delete() {
+	public function delete_post() {
 		$_POST = json_decode(file_get_contents("php://input"), true);
-		if ($this->penelitian_validation->delete() == true) {
+		if ($this->penelitian_validation->delete()) {
 			$data = $this->penelitian_model->delete();
-			self::response_ok('OK', $data);
+			if(array_key_exists('error', $data['result'])){
+				self::response_failed(
+					SELF::HTTP_INTERNAL_ERROR,
+					'Validation error',
+					$data
+				);
+			} else {
+				self::response_ok('OK', $data);
+			}
 		} else {
-			$data['error']    = $this->form_validation->error_array();
+			$data['result'] = [$this->form_validation->error_array()];
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
-				$data,
+				$data
 			);
 		}
 	}

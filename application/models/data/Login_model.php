@@ -45,9 +45,9 @@ class Login_model extends CI_Model {
     $update = $this->db->update('user_login', $set, $where);
 
     if($update == true) {
-			return array('success' => 'Data berhasil diubah');
+			return ['result' => ['success' => 'Data berhasil diubah']];
 		} else { 
-			return array('result' => 'Data gagal diubah');
+			return ['result' => ['error' => 'Data gagal diubah']];
 		}
 	}
 }
