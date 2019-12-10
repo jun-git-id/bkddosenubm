@@ -32,6 +32,7 @@ class Penelitian extends API_Controller {
 	}
 
 	public function index_post() {
+		$_POST = json_decode(file_get_contents("php://input"), true);
 		if ($this->penelitian_validation->add() == true) {
 			$data = $this->penelitian_model->add();
 			if(array_key_exists('error', $data['result'])){
