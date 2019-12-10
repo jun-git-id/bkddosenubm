@@ -25,7 +25,7 @@ class Login extends API_Controller {
 				self::response_ok('OK', $data);
 			}
 		} else {
-			$data['error'] = $this->form_validation->error_array();
+			$data['result'] = [$this->form_validation->error_array()];
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
@@ -47,7 +47,7 @@ class Login extends API_Controller {
 				self::response_ok('OK', $data);
 			}
 		} else {
-			$data['error'] = $this->form_validation->error_array();
+			$data['result'] = [$this->form_validation->error_array()];
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
