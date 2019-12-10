@@ -17,9 +17,9 @@ class Login_model extends CI_Model {
                     ->row_array();
 
     if(!empty($get['id_dosen']))
-      return ['result'  => $get];
+      return $get;
     else
-      return ['result' => ['Username atau Password salah.']];
+      return ['result' => 'Username atau Password salah.'];
 	}
 
 	public function change_password(){
@@ -29,7 +29,7 @@ class Login_model extends CI_Model {
                       ->get()
                       ->row_array();
 
-    if(empty($check['id_user'])) return ['result' => ['Username tidak ditemukan.']];
+    if(empty($check['id_user'])) return ['result' => 'Username tidak ditemukan.'];
 
     $check = $this->db->select('id_user')
                       ->from('user_login')
@@ -37,7 +37,7 @@ class Login_model extends CI_Model {
                       ->get()
                       ->row_array();
 
-    if(empty($check['id_user'])) return ['result' => ['Password lama tidak sesuai.']];
+    if(empty($check['id_user'])) return ['result' => 'Password lama tidak sesuai.'];
 
     $where = ['email' => $this->input->post('username')];
     $set   = ['password' => md5($this->input->post('new_password'))];
