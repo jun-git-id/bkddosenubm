@@ -44,11 +44,11 @@ class Mata_kuliah extends API_Controller {
 				self::response_ok('OK',$data);
 			}
 		} else {
-			$data['result'] = $this->form_validation->error_array();
+			$data['result'] = [$this->form_validation->error_array()];
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
-				[$data]
+				$data
 			);
 		}
 	}
