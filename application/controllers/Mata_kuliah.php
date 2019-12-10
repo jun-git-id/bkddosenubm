@@ -47,7 +47,7 @@ class Mata_kuliah extends API_Controller {
 			$data['result'] = $this->form_validation->error_array();
 			self::response_ok(
 				'Validation error',
-				$data
+				[$data]
 			);
 		}
 	}
