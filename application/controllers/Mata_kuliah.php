@@ -45,7 +45,8 @@ class Mata_kuliah extends API_Controller {
 			}
 		} else {
 			$data['result'] = $this->form_validation->error_array();
-			self::response_ok(
+			self::response_failed(
+				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
 				[$data]
 			);
