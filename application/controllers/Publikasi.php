@@ -22,7 +22,7 @@ class Publikasi extends API_Controller {
 			$data = $this->publikasi_model->detail();
 			self::response_ok('OK', $data);
 		} else {
-			$data['result']    = [$this->form_validation->error_array()];
+			$data['result']    = $this->form_validation->error_array();
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
@@ -45,7 +45,7 @@ class Publikasi extends API_Controller {
 				self::response_ok('OK', $data);
 			}
 		} else {
-			$data['result']    = [$this->form_validation->error_array()];
+			$data['result']    = $this->form_validation->error_array();
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
@@ -68,7 +68,7 @@ class Publikasi extends API_Controller {
 				self::response_ok('OK', $data);
 			}
 		} else {
-			$data['result'] = [$this->form_validation->error_array()];
+			$data['result'] = $this->form_validation->error_array();
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
