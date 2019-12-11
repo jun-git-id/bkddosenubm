@@ -12,7 +12,7 @@ class Login extends API_Controller {
   }
   
   public function index_post(){
-		$_POST = json_decode(file_get_contents("php://input"), true);
+	$_POST = json_decode(file_get_contents("php://input"), true);
     if ($this->login_validation->index()) {
 			$data = $this->login_model->index();
 			if(array_key_exists('error', $data['result'])){
@@ -35,6 +35,7 @@ class Login extends API_Controller {
   }
 
   public function change_password_post(){
+	$_POST = json_decode(file_get_contents("php://input"), true);
     if ($this->login_validation->change_password()) {
 			$data = $this->login_model->change_password();
 			if(array_key_exists('error', $data['result'])){
