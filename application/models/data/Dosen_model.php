@@ -60,35 +60,35 @@ class Dosen_model extends CI_Model {
 	public function add(){
 		$where = ['id_dosen' => $this->input->post('id_dosen', true)];
 		$data = [
-			'nidn' 					=> $this->input->post('nidn', true),
-			'nama_dosen' 		=> $this->input->post('nama_dosen', true),
+			'nidn' 			=> $this->input->post('nidn', true),
+			'nama_dosen' 	=> $this->input->post('nama_dosen', true),
 			'email_dosen' 	=> $this->input->post('email_dosen', true),
 			'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
-			'tgl_lahir' 	  => $this->input->post('tgl_lahir', true),
-			'telepon' 			=> $this->input->post('telepon', true),
-			'jabatan' 			=> $this->input->post('jabatan', true),
+			'tgl_lahir' 	=> $this->input->post('tgl_lahir', true),
+			'telepon' 		=> $this->input->post('telepon', true),
+			'jabatan' 		=> $this->input->post('jabatan', true),
 		];
 
 		$select = $this->db
-									->select('nidn, email_dosen')
-									->from('dosen')
-									->where('nidn', $data['nidn'])
-									->get()
-									->row_array();
+						->select('nidn, email_dosen')
+						->from('dosen')
+						->where('nidn', $data['nidn'])
+						->get()
+						->row_array();
 		
 		if(!empty($_FILES) && !empty($_FILES['foto'])){
-			$config['upload_path'] 			= 'assets/foto_dosen/';
-			$config['allowed_types'] 		= 'jpg|png|jpeg';
-			$config['max_size'] 				= 5000;
-			$config['file_name'] 				= $data['nidn'];
-			$config['overwrite']				= TRUE;
-			$config['remove_spaces'] 		= TRUE;
+			$config['upload_path'] 		= 'assets/foto_dosen/';
+			$config['allowed_types'] 	= 'jpg|png|jpeg';
+			$config['max_size'] 		= 5000;
+			$config['file_name'] 		= $data['nidn'];
+			$config['overwrite']		= TRUE;
+			$config['remove_spaces'] 	= TRUE;
 			$config['file_ext_tolower'] = TRUE;
-			$config['encrypt_name'] 		= FALSE;
+			$config['encrypt_name'] 	= FALSE;
 			
 			$this->load->library('upload', $config);
 			if (!$this->upload->do_upload('foto')){
-				$error = array('error' => $this->upload->display_errors());
+				$error = ['result' => ['error' => $this->upload->display_errors()]];
 				return $error;
 			}
 			else{
@@ -102,26 +102,26 @@ class Dosen_model extends CI_Model {
 		
 		if(empty($where['id_dosen'])){
 			if(!empty($select['nidn'])){
-				$response['error']    = 'Data NIDN '.$data['nidn'].' sudah ada dalam server';
+				$response['result']    = ['error' => 'Data NIDN '.$data['nidn'].' sudah ada dalam server'];
 				return $response;
 			}
 			$insert = $this->db->insert('dosen', $data);
 			if($insert == true) {
 				self::addLogin($data);
-				$response['message']  = 'Data berhasil ditambahkan';
+				$response['result']  = ['message' => 'Data berhasil ditambahkan'];
 				return $response;
 			} else { 
-				$response['error']    = 'Data gagal ditambahkan';
+				$response['result']    = ['error' => 'Data gagal ditambahkan'];
 				return $response;
 			}
 		} else {
 			$update = $this->db->update('dosen', $data, $where);
 			if($update == true) {
 				if($data['email_dosen'] != $select['email_dosen']) self::editLogin($select,$data);
-				$response['message']  = 'Data berhasil diubah';
+				$response['result']  = ['message' => 'Data berhasil diubah'];
 				return $response;
 			} else { 
-				$response['message']  = 'Data gagal diubah';
+				$response['result']  = ['error' => 'Data gagal diubah'];
 			}
 		}
 
@@ -157,10 +157,10 @@ class Dosen_model extends CI_Model {
 
 		$delete = $this->db->delete('dosen', $where);
 		if($delete == true) {
-			$response['message']  = 'Data berhasil dihapus';
+			$response['result']  = ['message' => 'Data berhasil dihapus'];
 			return $response;
 		} else { 
-			$response['error']    = 'Data gagal dihapus';
+			$response['result']  = ['error' => 'Data gagal dihapus'];
 			return $response;
 		}
 	}

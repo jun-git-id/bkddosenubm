@@ -79,16 +79,14 @@ class Penelitian_model extends CI_Model {
 		if(empty($where['id_penelitian'])){
 			$insert = $this->db->insert('penelitian', $data);
 			if($insert == true) {
-				$data = self::index();
-				return $data;
+				return ['result' => ['message' => 'Data berhasil ditambahkan']];
 			}
 			else 
 				return ['result' => ['error' => 'Data gagal ditambahkan']];
 		} else {
 			$update = $this->db->update('penelitian', $data, $where);
 			if($update == true) {
-				$data = self::index();
-				return $data;
+				return ['result' => ['message' => 'Data berhasil ditambahkan']];
 			}
 			else 
 				return ['result' => ['error' => 'Data gagal diubah']];
@@ -101,8 +99,7 @@ class Penelitian_model extends CI_Model {
 		
 		$delete = $this->db->delete('penelitian', $where);
 		if($delete == true) {
-			$data = self::index();
-			return $data;
+			return ['result' => ['message' => 'Data berhasil dihapus']];
 		}
 		else 
 			return ['result' => ['error' => 'Data gagal dihapus']];
