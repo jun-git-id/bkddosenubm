@@ -70,16 +70,20 @@ class Publikasi_model extends CI_Model {
 
 		if(empty($where['id_publikasi'])){
 			$insert = $this->db->insert('publikasi', $data);
-			if($insert == true) 
-				return ['message' => 'Data berhasil ditambahkan']; 
+			if($insert == true) {
+				$data = self::index();
+				return $data; 
+			}
 			else 
-				return ['error' => 'Data gagal ditambahkan'];
+				return ['result' => ['error' => 'Data gagal ditambahkan']];
 		} else {
 			$update = $this->db->update('publikasi', $data, $where);
-			if($update == true) 
-				return ['message' => 'Data berhasil diubah']; 
+			if($update == true) {
+				$data = self::index();
+				return $data;
+			}
 			else 
-				return ['error' => 'Data gagal diubah'];
+				return ['result' => ['error' => 'Data gagal diubah']];
 		}
 
 	}
@@ -88,9 +92,11 @@ class Publikasi_model extends CI_Model {
     $where = ['id_publikasi' => $this->input->post('id_publikasi', true)];
     
 		$delete = $this->db->delete('publikasi', $where);
-		if($delete == true) 
-			return ['message' => 'Data berhasil dihapus']; 
+		if($delete == true) {
+			$data = self::index();
+			return $data;
+		}
 		else 
-			return ['error' => 'Data gagal dihapus'];
+			return ['result' => ['error' => 'Data gagal dihapus']];
 	}
 }
