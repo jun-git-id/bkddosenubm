@@ -86,7 +86,7 @@ class Penelitian_model extends CI_Model {
 		} else {
 			$update = $this->db->update('penelitian', $data, $where);
 			if($update == true) {
-				return ['result' => ['message' => 'Data berhasil ditambahkan']];
+				return ['result' => ['message' => 'Data berhasil diubah']];
 			}
 			else 
 				return ['result' => ['error' => 'Data gagal diubah']];

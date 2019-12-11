@@ -5,10 +5,10 @@ class Pengabdian extends API_Controller {
 
 	function __construct() {
 	    parent::__construct();
-	    $this->load->model(array(
-				'data/pengabdian_model', 
-				'validation/pengabdian_validation'
-			));
+	    $this->load->model([
+			'data/pengabdian_model', 
+			'validation/pengabdian_validation'
+		]);
 	}
 
 	public function index_get() {
@@ -22,48 +22,57 @@ class Pengabdian extends API_Controller {
 			$data = $this->pengabdian_model->detail();
 			self::response_ok('OK', $data);
 		} else {
-			$data['error']    = $this->form_validation->error_array();
+			$data['result'] = $this->form_validation->error_array();
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
-				$data,
+				$data
 			);
 		}
 	}
 
 	public function index_post() {
+	    $_POST = json_decode(file_get_contents("php://input"), true);
 		if ($this->pengabdian_validation->add()) {
 			$data = $this->pengabdian_model->add();
-			if(array_key_exists('error', $data)){
+			if(array_key_exists('error', $data['result'])){
 				self::response_failed(
 					SELF::HTTP_INTERNAL_ERROR,
 					'Validation error',
-					$data,
+					$data
+				);
+			} else {
+				self::response_ok('OK',$data);
+			}
+		} else {
+			$data['result'] = $this->form_validation->error_array();
+			self::response_failed(
+				SELF::HTTP_INTERNAL_ERROR,
+				'Validation error',
+				$data
+			);
+		}
+	}
+
+	public function delete_post() {
+		$_POST = json_decode(file_get_contents("php://input"), true);
+		if ($this->pengabdian_validation->delete()) {
+			$data = $this->pengabdian_model->delete();
+			if(array_key_exists('error', $data['result'])){
+				self::response_failed(
+					SELF::HTTP_INTERNAL_ERROR,
+					'Validation error',
+					$data
 				);
 			} else {
 				self::response_ok('OK', $data);
 			}
 		} else {
-			$data['error']    = $this->form_validation->error_array();
+			$data['result'] = $this->form_validation->error_array();
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
-				$data,
-			);
-		}
-	}
-
-	public function index_delete() {
-		$_POST = json_decode(file_get_contents("php://input"), true);
-		if ($this->pengabdian_validation->delete()) {
-			$data = $this->pengabdian_model->delete();
-			self::response_ok('OK', $data);
-		} else {
-			$data['error']    = $this->form_validation->error_array();
-			self::response_failed(
-				SELF::HTTP_INTERNAL_ERROR,
-				'Validation error',
-				$data,
+				$data
 			);
 		}
 	}

@@ -86,7 +86,7 @@ class Pengabdian_model extends CI_Model {
 			
 			$this->load->library('upload', $config);
 			if (!$this->upload->do_upload('sampul')){
-				$error = array('error' => $this->upload->display_errors());
+				$error = ['result' => ['error' => $this->upload->display_errors()]];
 				return $error;
 			}
 			else{
@@ -101,15 +101,15 @@ class Pengabdian_model extends CI_Model {
 		if(empty($where['id_pengabdian'])){
 			$insert = $this->db->insert('pengabdian', $data);
 			if($insert == true) 
-				return ['message' => 'Data berhasil ditambahkan']; 
+				return ['result' => ['message' => 'Data berhasil ditambahkan']]; 
 			else 
-				return ['error' => 'Data gagal ditambahkan'];
+				return ['result' => ['error' => 'Data gagal ditambahkan']];
 		} else {
 			$update = $this->db->update('pengabdian', $data, $where);
 			if($update == true) 
-				return ['message' => 'Data berhasil diubah']; 
+				return ['result' => ['message' => 'Data berhasil diubah']]; 
 			else 
-				return ['error' => 'Data gagal diubah'];
+				return ['result' => ['error' => 'Data gagal diubah']];
 		}
 
 	}
@@ -132,8 +132,8 @@ class Pengabdian_model extends CI_Model {
 		
 		$delete = $this->db->delete('pengabdian', $where);
 		if($delete == true) 
-			return array('message' => 'Data berhasil dihapus'); 
+			return ['result' => ['message' => 'Data berhasil dihapus']]; 
 		else 
-			return array('error' => 'Data gagal dihapus');
+			return ['result' => ['error' => 'Data gagal dihapus']];
 	}
 }

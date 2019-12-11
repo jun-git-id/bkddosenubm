@@ -95,15 +95,15 @@ class Mengajar_model extends CI_Model {
 		if(empty($where['id_mengajar'])){
 			$insert = $this->db->insert('mengajar', $data);
 			if($insert == true) 
-				return ['message' => 'Data berhasil ditambahkan']; 
+				return ['result' => ['message' => 'Data berhasil ditambahkan']]; 
 			else 
-				return ['error' => 'Data gagal ditambahkan'];
+				return ['result' => ['error' => 'Data gagal ditambahkan']];
 		} else {
 			$update = $this->db->update('mengajar', $data, $where);
 			if($update == true) 
-				return ['message' => 'Data berhasil diubah']; 
+				return ['result' => ['message' => 'Data berhasil diubah']]; 
 			else 
-				return ['error' => 'Data gagal diubah'];
+				return ['result' => ['error' => 'Data gagal diubah']];
 		}
 
 	}
@@ -126,8 +126,8 @@ class Mengajar_model extends CI_Model {
 
 		$delete = $this->db->delete('mengajar', $where);
 		if($delete == true) 
-			return array('success' => 'Data berhasil dihapus'); 
+			return ['result' => ['success' => 'Data berhasil dihapus']]; 
 		else 
-			return array('error' => 'Data gagal dihapus');
+			return ['result' => ['error' => 'Data gagal dihapus']];
 	}
 }

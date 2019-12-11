@@ -22,56 +22,57 @@ class Mengajar extends API_Controller {
 			$data = $this->mengajar_model->detail();
 			self::response_ok('OK', $data);
 		} else {
-			$data['error']    = $this->form_validation->error_array();
+			$data['result'] = $this->form_validation->error_array();
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
-				$data,
+				$data
 			);
 		}
 	}
 
 	public function index_post() {
+	    $_POST = json_decode(file_get_contents("php://input"), true);
 		if ($this->mengajar_validation->add()) {
 			$data = $this->mengajar_model->add();
-			if(array_key_exists('error', $data)){
+			if(array_key_exists('error', $data['result'])){
 				self::response_failed(
 					SELF::HTTP_INTERNAL_ERROR,
 					'Validation error',
-					$data,
+					$data
 				);
 			} else {
-				self::response_ok('OK', $data);
+				self::response_ok('OK',$data);
 			}
 		} else {
-			$data['error'] = $this->form_validation->error_array();
+			$data['result'] = $this->form_validation->error_array();
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
-				$data,
+				$data
 			);
 		}
 	}
 
-	public function index_delete() {
+	public function delete_post() {
 		$_POST = json_decode(file_get_contents("php://input"), true);
 		if ($this->mengajar_validation->delete()) {
 			$data = $this->mengajar_model->delete();
-			if(array_key_exists('error', $data)){
+			if(array_key_exists('error', $data['result'])){
 				self::response_failed(
 					SELF::HTTP_INTERNAL_ERROR,
 					'Validation error',
-					$data,
+					$data
 				);
 			} else {
 				self::response_ok('OK', $data);
 			}
 		} else {
-			$data['error'] = $this->form_validation->error_array();
+			$data['result'] = $this->form_validation->error_array();
 			self::response_failed(
 				SELF::HTTP_INTERNAL_ERROR,
 				'Validation error',
-				$data,
+				$data
 			);
 		}
 	}
