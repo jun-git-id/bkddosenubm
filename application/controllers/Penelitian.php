@@ -24,7 +24,7 @@ class Penelitian extends API_Controller {
 		} else {
 			$data['result']    = $this->form_validation->error_array();
 			self::response_failed(
-				SELF::HTTP_INTERNAL_ERROR,
+				SELF::HTTP_OK,
 				'Validation error',
 				$data
 			);
@@ -37,7 +37,7 @@ class Penelitian extends API_Controller {
 			$data = $this->penelitian_model->add();
 			if(array_key_exists('error', $data['result'])){
 				self::response_failed(
-					SELF::HTTP_INTERNAL_ERROR,
+					SELF::HTTP_OK,
 					'Validation error',
 					$data
 				);
@@ -47,7 +47,7 @@ class Penelitian extends API_Controller {
 		} else {
 			$data['result']    = $this->form_validation->error_array();
 			self::response_failed(
-				SELF::HTTP_INTERNAL_ERROR,
+				SELF::HTTP_OK,
 				'Validation error',
 				$data
 			);
@@ -60,7 +60,7 @@ class Penelitian extends API_Controller {
 			$data = $this->penelitian_model->delete();
 			if(array_key_exists('error', $data['result'])){
 				self::response_failed(
-					SELF::HTTP_INTERNAL_ERROR,
+					SELF::HTTP_OK,
 					'Validation error',
 					$data
 				);
@@ -70,7 +70,7 @@ class Penelitian extends API_Controller {
 		} else {
 			$data['result'] = $this->form_validation->error_array();
 			self::response_failed(
-				SELF::HTTP_INTERNAL_ERROR,
+				SELF::HTTP_OK,
 				'Validation error',
 				$data
 			);
