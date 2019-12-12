@@ -120,7 +120,7 @@ class Dosen_model extends CI_Model {
 		if(!empty($_FILES) && !empty($_FILES['foto'])){
 			$config['upload_path'] 		= 'assets/foto_dosen/';
 			$config['allowed_types'] 	= 'jpg|png|jpeg';
-			$config['max_size'] 		= 5000;
+			$config['max_size'] 		= 50000;
 			$config['file_name'] 		= round(microtime(true) * 1000);
 			$config['overwrite']		= TRUE;
 			$config['remove_spaces'] 	= TRUE;
