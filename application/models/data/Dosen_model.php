@@ -141,7 +141,7 @@ class Dosen_model extends CI_Model {
 			}
 		}
 
-		return ['result' => ['images' => $data]];
+		return ['success' => "File successfully uploaded"];
 	}
 
 	public function delete(){
