@@ -142,12 +142,13 @@ class Dosen_model extends CI_Model {
 	public function delete(){
 		$where = ['id_dosen' => $this->input->post('id_dosen', true)];
 		$data = $this->db
-					 ->select('foto')
+					 ->select('email_dosen, foto')
 					 ->from('dosen')
 					 ->where($where)
 					 ->get()
 					 ->row_array();
 							
+		$this->db->delete('user_login', ['email' => $data['email_dosen']]);
 		if(!empty($data['foto'])){
 			$url  = str_replace(base_url(), '', $data);
 			if(file_exists($url)){
