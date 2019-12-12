@@ -76,29 +76,6 @@ class Dosen_model extends CI_Model {
 						->get()
 						->row_array();
 		
-		if(!empty($_FILES) && !empty($_FILES['foto'])){
-			$config['upload_path'] 		= 'assets/foto_dosen/';
-			$config['allowed_types'] 	= 'jpg|png|jpeg';
-			$config['max_size'] 		= 5000;
-			$config['file_name'] 		= $data['nidn'];
-			$config['overwrite']		= TRUE;
-			$config['remove_spaces'] 	= TRUE;
-			$config['file_ext_tolower'] = TRUE;
-			$config['encrypt_name'] 	= FALSE;
-			
-			$this->load->library('upload', $config);
-			if (!$this->upload->do_upload('foto')){
-				$error = ['result' => ['error' => $this->upload->display_errors()]];
-				return $error;
-			}
-			else{
-				$upload_file = $this->upload->data();
-				$image_path = 'assets/foto_dosen/';
-				$image_path .= $upload_file['file_name'];
-				$image = base_url($image_path);
-				$data['foto'] = $image;
-			}
-		}
 		
 		if(empty($where['id_dosen'])){
 			if(!empty($select['nidn'])){
@@ -137,6 +114,34 @@ class Dosen_model extends CI_Model {
 		$field['email'] = $data['email_dosen'];
 		$where = ['email' => $details['email_dosen']];
 		return $this->db->update('user_login', $field, $where);
+	}
+
+	public function picture_post(){
+		if(!empty($_FILES) && !empty($_FILES['foto'])){
+			$config['upload_path'] 		= 'assets/foto_dosen/';
+			$config['allowed_types'] 	= 'jpg|png|jpeg';
+			$config['max_size'] 		= 5000;
+			$config['file_name'] 		= round(microtime(true) * 1000);
+			$config['overwrite']		= TRUE;
+			$config['remove_spaces'] 	= TRUE;
+			$config['file_ext_tolower'] = TRUE;
+			$config['encrypt_name'] 	= FALSE;
+			
+			$this->load->library('upload', $config);
+			if (!$this->upload->do_upload('foto')){
+				$error = ['result' => ['error' => $this->upload->display_errors()]];
+				return $error;
+			}
+			else{
+				$upload_file = $this->upload->data();
+				$image_path = 'assets/foto_dosen/';
+				$image_path .= $upload_file['file_name'];
+				$image = base_url($image_path);
+				$data = $image;
+			}
+		}
+
+		return ['result' => ['images' => $data]];
 	}
 
 	public function delete(){
