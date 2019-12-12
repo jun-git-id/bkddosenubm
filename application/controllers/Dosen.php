@@ -57,7 +57,7 @@ class Dosen extends API_Controller {
 	public function picture_post(){
 	    $_POST = json_decode(file_get_contents("php://input"), true);
 		$data = $this->dosen_model->picture_post();
-		if(array_key_exists('error', $data['result'])){
+		if(array_key_exists('error', $data['success'])){
 			self::response_failed(
 				SELF::HTTP_OK,
 				'Validation error',
