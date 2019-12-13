@@ -67,6 +67,7 @@ class Dosen_model extends CI_Model {
 			'tgl_lahir' 	=> $this->input->post('tgl_lahir', true),
 			'telepon' 		=> $this->input->post('telepon', true),
 			'jabatan' 		=> $this->input->post('jabatan', true),
+			'foto' 			=> $this->input->post('foto', true),
 		];
 
 		$select = $this->db
