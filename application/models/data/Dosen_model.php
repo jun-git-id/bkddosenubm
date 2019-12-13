@@ -129,7 +129,7 @@ class Dosen_model extends CI_Model {
 			
 			$this->load->library('upload', $config);
 			if (!$this->upload->do_upload('foto')){
-				$error = ['result' => ['error' => $this->upload->display_errors()]];
+				$error = ['success' => $this->upload->display_errors()];
 				return $error;
 			}
 			else{
