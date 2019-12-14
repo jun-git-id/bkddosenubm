@@ -29,7 +29,7 @@ class Login_model extends CI_Model {
                       ->get()
                       ->row_array();
 
-    if(empty($check['id_user'])) return ['result' => 'Username tidak ditemukan.'];
+    if(empty($check['id_user'])) return ['result' => ['message' => 'Username tidak ditemukan.']];
 
     $check = $this->db->select('id_user')
                       ->from('user_login')
@@ -37,7 +37,7 @@ class Login_model extends CI_Model {
                       ->get()
                       ->row_array();
 
-    if(empty($check['id_user'])) return ['result' => 'Password lama tidak sesuai.'];
+    if(empty($check['id_user'])) return ['result' => ['message' => 'Password lama tidak sesuai.]'];
 
     $where = ['email' => $this->input->post('username')];
     $set   = ['password' => md5($this->input->post('new_password'))];
@@ -45,9 +45,9 @@ class Login_model extends CI_Model {
     $update = $this->db->update('user_login', $set, $where);
 
     if($update == true) {
-			return ['result' => 'Data berhasil diubah'];
+			return ['result' => ['message' => 'Data berhasil diubah']];
 		} else { 
-			return ['result' => 'Data gagal diubah'];
+			return ['result' => ['message' => 'Data gagal diubah']];
 		}
 	}
 
@@ -59,10 +59,10 @@ class Login_model extends CI_Model {
                       ->row_array();
 
     if ($check['tgl_lahir'] != $this->input->post('tgl_lahir')) {
-      return ['result' => 'Tanggal lahir tidak sesuai.'];
+      return ['result' => ['message' => 'Tanggal lahir tidak sesuai.']];
     }
     else if ($check['telepon'] != $this->input->post('no_hp')) {
-      return ['result' => 'No Handphone tidak sesuai.'];
+      return ['result' => ['message' => 'No Handphone tidak sesuai.']];
     }
     else {
       $where = ['email' => $this->input->post('username')];
@@ -70,9 +70,9 @@ class Login_model extends CI_Model {
       
       $update = $this->db->update('user_login', $set, $where);
       if($update == true) {
-        return ['result' => 'Data berhasil diubah'];
+        return ['result' => ['message' => 'Data berhasil diubah']];
       } else { 
-        return ['result' => 'Data gagal diubah'];
+        return ['result' => ['message' => 'Data gagal diubah']];
       }
     }
   }
