@@ -72,7 +72,7 @@ class Pengabdian_model extends CI_Model {
       'anggota_pengabdian'  => $this->input->post('anggota_pengabdian'),
       'mitra_pengabdian'    => $this->input->post('mitra_pengabdian'),
       'alamat_mitra'        => $this->input->post('alamat_mitra'),
-      'sampul_laporan' 		=> $this->input->pos('sampul_laporan')
+      'sampul_laporan' 		=> $this->input->post('sampul_laporan')
 
     ];
 
@@ -114,7 +114,7 @@ class Pengabdian_model extends CI_Model {
 				$image = base_url($image_path);
 				$data = $image;
 			}
-			
+
 			return ['success' => $data];
 		}
 	}
