@@ -56,7 +56,7 @@ class Pengabdian extends API_Controller {
 
 	public function picture_post(){
 	    $_POST = json_decode(file_get_contents("php://input"), true);
-		$data = $this->mengajar_model->picture_post();
+		$data = $this->pengabdian_model->picture_post();
 		self::response_ok('OK',$data);
 	}
 
