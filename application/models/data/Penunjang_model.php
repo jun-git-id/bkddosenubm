@@ -106,7 +106,7 @@ class Penunjang_model extends CI_Model {
 			$config['encrypt_name'] 		= FALSE;
 			
 			$this->load->library('upload', $config);
-			if (!$this->upload->do_upload('sertifikat')){
+			if (!$this->upload->do_upload('sertifikat_penunjang')){
 				$error = ['success' => $this->upload->display_errors()];
 				return $error;
 			}
