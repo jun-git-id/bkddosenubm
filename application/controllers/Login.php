@@ -57,4 +57,27 @@ class Login extends API_Controller {
 		}
   }
 
+  public function forgot_password_post(){
+	$_POST = json_decode(file_get_contents("php://input"), true);
+    if ($this->login_validation->forgot_password()) {
+			$data = $this->login_model->forgot_password();
+			if(array_key_exists('error', $data['result'])){
+				self::response_failed(
+					SELF::HTTP_INTERNAL_ERROR,
+					'Validation error',
+					$data
+				);
+			} else {
+				self::response_ok('OK', $data);
+			}
+		} else {
+			$data['result'] = [$this->form_validation->error_array()];
+			self::response_failed(
+				SELF::HTTP_INTERNAL_ERROR,
+				'Validation error',
+				$data
+			);
+		}
+  }
+
 }
