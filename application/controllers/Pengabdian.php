@@ -54,6 +54,12 @@ class Pengabdian extends API_Controller {
 		}
 	}
 
+	public function picture_post(){
+	    $_POST = json_decode(file_get_contents("php://input"), true);
+		$data = $this->mengajar_model->picture_post();
+		self::response_ok('OK',$data);
+	}
+
 	public function delete_post() {
 		$_POST = json_decode(file_get_contents("php://input"), true);
 		if ($this->pengabdian_validation->delete()) {

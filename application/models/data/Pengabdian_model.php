@@ -72,31 +72,9 @@ class Pengabdian_model extends CI_Model {
       'anggota_pengabdian'  => $this->input->post('anggota_pengabdian'),
       'mitra_pengabdian'    => $this->input->post('mitra_pengabdian'),
       'alamat_mitra'        => $this->input->post('alamat_mitra'),
+      'sampul_laporan' 		=> $this->input->pos('sampul_laporan')
+
     ];
-    
-    if(!empty($_FILES) && !empty($_FILES['sampul'])){
-			$config['upload_path'] 			= 'assets/pengabdian/';
-			$config['allowed_types'] 		= 'jpg|png|jpeg';
-			$config['max_size'] 				= 5000;
-			$config['file_name'] 				= $data['id_dosen'].'-'.$data['tahun_pengabdian'].'-'.$data['semester_pengabdian'].'-'.$data['mitra_pengabdian'];
-			$config['overwrite']				= TRUE;
-			$config['remove_spaces'] 		= TRUE;
-			$config['file_ext_tolower'] = TRUE;
-			$config['encrypt_name'] 		= FALSE;
-			
-			$this->load->library('upload', $config);
-			if (!$this->upload->do_upload('sampul')){
-				$error = ['result' => ['error' => $this->upload->display_errors()]];
-				return $error;
-			}
-			else{
-				$upload_file = $this->upload->data();
-				$image_path = 'assets/pengabdian/';
-				$image_path .= $upload_file['file_name'];
-				$image = base_url($image_path);
-				$data['sampul_laporan'] = $image;
-			}
-		}
 
 		if(empty($where['id_pengabdian'])){
 			$insert = $this->db->insert('pengabdian', $data);
@@ -111,7 +89,34 @@ class Pengabdian_model extends CI_Model {
 			else 
 				return ['result' => ['error' => 'Data gagal diubah']];
 		}
+	}
 
+	public function picture_post(){
+		if(!empty($_FILES) && !empty($_FILES['sampul_laporan'])){
+			$config['upload_path'] 			= 'assets/pengabdian/';
+			$config['allowed_types'] 		= 'jpg|png|jpeg';
+			$config['max_size'] 				= 5000;
+			$config['file_name'] 				= round(microtime(true) * 1000);
+			$config['overwrite']				= TRUE;
+			$config['remove_spaces'] 		= TRUE;
+			$config['file_ext_tolower'] = TRUE;
+			$config['encrypt_name'] 		= FALSE;
+			
+			$this->load->library('upload', $config);
+			if (!$this->upload->do_upload('sampul_laporan')){
+				$error = ['success' => $this->upload->display_errors()];
+				return $error;
+			}
+			else{
+				$upload_file = $this->upload->data();
+				$image_path = 'assets/pengabdian/';
+				$image_path .= $upload_file['file_name'];
+				$image = base_url($image_path);
+				$data = $image;
+			}
+			
+			return ['success' => $data];
+		}
 	}
 
 	public function delete(){
