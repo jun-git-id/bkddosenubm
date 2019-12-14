@@ -22,5 +22,13 @@ class Login_validation extends CI_Model {
 	$this->form_validation->set_rules('conf_password', 'Konfirmasi Password', 'trim|required|matches[new_password]');
 	return $this->form_validation->run();
   }
+
+  public function forgot_password(){
+  	$this->form_validation->set_data($this->input->post());
+	$this->form_validation->set_rules('username', 'Email', 'trim|required');
+	$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'trim|required');
+	$this->form_validation->set_rules('no_hp', 'No Handphone', 'trim|required');
+	return $this->form_validation->run();
+  }
 	
 }

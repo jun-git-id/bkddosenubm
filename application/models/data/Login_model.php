@@ -39,19 +39,6 @@ class Login_model extends CI_Model {
 
     if(empty($check['id_user'])) return ['result' => 'Password lama tidak sesuai.'];
 
-    $check = $this->db->select('tgl_lahir, telepon')
-                      ->from('dosen')
-                      ->where('email_dosen', $this->input->post('username'))
-                      ->get()
-                      ->row_array();
-
-    if ($check['tgl_lahir'] != $this->input->post('tgl_lahir')) {
-      return ['result' => 'Tanggal lahir tidak sesuai.'];
-    }
-    if ($check['telepon'] != $this->input->post('no_hp')) {
-      return ['result' => 'No Handphone tidak sesuai.'];
-    }
-
     $where = ['email' => $this->input->post('username')];
     $set   = ['password' => md5($this->input->post('new_password'))];
     
@@ -63,4 +50,30 @@ class Login_model extends CI_Model {
 			return ['result' => 'Data gagal diubah'];
 		}
 	}
+
+  public function forgot_password(){
+    $check = $this->db->select('tgl_lahir, telepon')
+                      ->from('dosen')
+                      ->where('email_dosen', $this->input->post('username'))
+                      ->get()
+                      ->row_array();
+
+    if ($check['tgl_lahir'] != $this->input->post('tgl_lahir')) {
+      return ['result' => 'Tanggal lahir tidak sesuai.'];
+    }
+    else if ($check['telepon'] != $this->input->post('no_hp')) {
+      return ['result' => 'No Handphone tidak sesuai.'];
+    }
+    else {
+      $where = ['email' => $this->input->post('username')];
+      $set   = ['password' => md5($check['tgl_lahir'])];
+      
+      $update = $this->db->update('user_login', $set, $where);
+      if($update == true) {
+        return ['result' => 'Data berhasil diubah'];
+      } else { 
+        return ['result' => 'Data gagal diubah'];
+      }
+    }
+  }
 }
