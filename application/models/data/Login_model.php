@@ -66,7 +66,7 @@ class Login_model extends CI_Model {
     }
     else {
       $where = ['email' => $this->input->post('username')];
-      $set   = ['password' => md5($check['tgl_lahir'])];
+      $set   = ['password' => md5(preg_replace('/\//','',$check['tgl_lahir']))];
       
       $update = $this->db->update('user_login', $set, $where);
       if($update == true) {
