@@ -24,8 +24,8 @@ class Mengajar_model extends CI_Model {
                    ->from('mengajar a')
                    ->join('mata_kuliah b', 'a.id_matkul = b.id_matkul')
                    ->join('dosen c', 'a.id_dosen = c.id_dosen')
-									 ->get()
-									 ->result();
+				 ->get()
+				 ->result();
 
 		$data['last'] = $this->db->last_query();
 
@@ -67,30 +67,6 @@ class Mengajar_model extends CI_Model {
 			'id_matkul' 		=> $this->input->post('id_matkul', true),
 			'sks' 	        => $this->input->post('sks', true)
 		];
-		
-		if(!empty($_FILES) && !empty($_FILES['sk'])){
-			$config['upload_path'] 			= 'assets/sk_mengajar/';
-			$config['allowed_types'] 		= 'jpg|png|jpeg';
-			$config['max_size'] 				= 5000;
-			$config['file_name'] 				= $data['id_dosen'].'-'.$data['tahun_ajaran'].'-'.$data['id_matkul'];
-			$config['overwrite']				= TRUE;
-			$config['remove_spaces'] 		= TRUE;
-			$config['file_ext_tolower'] = TRUE;
-			$config['encrypt_name'] 		= FALSE;
-			
-			$this->load->library('upload', $config);
-			if (!$this->upload->do_upload('sk')){
-				$error = array('error' => $this->upload->display_errors());
-				return $error;
-			}
-			else{
-				$upload_file = $this->upload->data();
-				$image_path = 'assets/sk_mengajar/';
-				$image_path .= $upload_file['file_name'];
-				$image = base_url($image_path);
-				$data['sk_mengajar'] = $image;
-			}
-		}
 
 		if(empty($where['id_mengajar'])){
 			$insert = $this->db->insert('mengajar', $data);
@@ -106,6 +82,34 @@ class Mengajar_model extends CI_Model {
 				return ['result' => ['error' => 'Data gagal diubah']];
 		}
 
+	}
+
+	public function picture_post(){
+		if(!empty($_FILES) && !empty($_FILES['sk'])){
+			$config['upload_path'] 			= 'assets/sk_mengajar/';
+			$config['allowed_types'] 		= 'jpg|png|jpeg';
+			$config['max_size'] 				= 5000;
+			$config['file_name'] 				= round(microtime(true) * 1000);
+			$config['overwrite']				= TRUE;
+			$config['remove_spaces'] 		= TRUE;
+			$config['file_ext_tolower'] = TRUE;
+			$config['encrypt_name'] 		= FALSE;
+			
+			$this->load->library('upload', $config);
+			if (!$this->upload->do_upload('sk')){
+				$error = ['success' => $this->upload->display_errors()];
+				return $error;
+			}
+			else{
+				$upload_file = $this->upload->data();
+				$image_path = 'assets/sk_mengajar/';
+				$image_path .= $upload_file['file_name'];
+				$image = base_url($image_path);
+				$data = $image;
+			}
+
+			return ['success' => $data];
+		}
 	}
 
 	public function delete(){
