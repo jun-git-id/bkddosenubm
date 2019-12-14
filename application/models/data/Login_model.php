@@ -29,7 +29,7 @@ class Login_model extends CI_Model {
                       ->get()
                       ->row_array();
 
-    if(empty($check['id_user'])) return ['result' => ['error' => 'Username tidak ditemukan.']];
+    if(empty($check['id_user'])) return ['result' => 'Username tidak ditemukan.'];
 
     $check = $this->db->select('id_user')
                       ->from('user_login')
@@ -37,7 +37,20 @@ class Login_model extends CI_Model {
                       ->get()
                       ->row_array();
 
-    if(empty($check['id_user'])) return ['result' => ['error' => 'Password lama tidak sesuai.']];
+    if(empty($check['id_user'])) return ['result' => 'Password lama tidak sesuai.'];
+
+    $check = $this->db->select('tgl_lahir, telepon')
+                      ->from('dosen')
+                      ->where('email_dosen', $this->input->post('username'))
+                      ->get()
+                      ->row_array();
+
+    if ($check['tgl_lahir'] != $this->input->post('tgl_lahir')) {
+      return ['result' => 'Tanggal lahir tidak sesuai.'];
+    }
+    if ($check['telepon'] != $this->input->post('no_hp')) {
+      return ['result' => 'No Handphone tidak sesuai.'];
+    }
 
     $where = ['email' => $this->input->post('username')];
     $set   = ['password' => md5($this->input->post('new_password'))];
@@ -45,9 +58,9 @@ class Login_model extends CI_Model {
     $update = $this->db->update('user_login', $set, $where);
 
     if($update == true) {
-			return ['result' => ['success' => 'Data berhasil diubah']];
+			return ['result' => 'Data berhasil diubah'];
 		} else { 
-			return ['result' => ['error' => 'Data gagal diubah']];
+			return ['result' => 'Data gagal diubah'];
 		}
 	}
 }
