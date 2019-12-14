@@ -74,32 +74,9 @@ class Penunjang_model extends CI_Model {
       'topik_penunjang' => $this->input->post('topik_penunjang'),
       'tempat_penunjang' => $this->input->post('tempat_penunjang'),
       'tgl_pelaksanaan' => $this->input->post('tgl_pelaksanaan'),
-      'penyelenggara_penunjang' => $this->input->post('penyelenggara_penunjang')
+      'penyelenggara_penunjang' => $this->input->post('penyelenggara_penunjang'),
+      'sertifikat_penunjang' => $this->input->post('sertifikat_penunjang')
     ];
-    
-    if(!empty($_FILES) && !empty($_FILES['sampul'])){
-			$config['upload_path'] 			= 'assets/penunjang/';
-			$config['allowed_types'] 		= 'jpg|png|jpeg';
-			$config['max_size'] 				= 5000;
-			$config['file_name'] 				= $data['id_dosen'].'-'.$data['topik_penunjang'];
-			$config['overwrite']				= TRUE;
-			$config['remove_spaces'] 		= TRUE;
-			$config['file_ext_tolower'] = TRUE;
-			$config['encrypt_name'] 		= FALSE;
-			
-			$this->load->library('upload', $config);
-			if (!$this->upload->do_upload('sertifikat')){
-				$error = ['result' => ['error' => $this->upload->display_errors()]];
-				return $error;
-			}
-			else{
-				$upload_file = $this->upload->data();
-				$image_path = 'assets/penunjang/';
-				$image_path .= $upload_file['file_name'];
-				$image = base_url($image_path);
-				$data['sertifikat_penunjang'] = $image;
-			}
-		}
 
 		if(empty($where['id_penunjang'])){
 			$insert = $this->db->insert('penunjang', $data);
@@ -115,6 +92,34 @@ class Penunjang_model extends CI_Model {
 				return ['result' => ['error' => 'Data gagal diubah']];
 		}
 
+	}
+
+	public function picture_post(){
+		if(!empty($_FILES) && !empty($_FILES['sertifikat_penunjang'])){
+			$config['upload_path'] 			= 'assets/penunjang/';
+			$config['allowed_types'] 		= 'jpg|png|jpeg';
+			$config['max_size'] 				= 5000;
+			$config['file_name'] 				= round(microtime(true) * 1000);
+			$config['overwrite']				= TRUE;
+			$config['remove_spaces'] 		= TRUE;
+			$config['file_ext_tolower'] = TRUE;
+			$config['encrypt_name'] 		= FALSE;
+			
+			$this->load->library('upload', $config);
+			if (!$this->upload->do_upload('sertifikat')){
+				$error = ['success' => $this->upload->display_errors()];
+				return $error;
+			}
+			else{
+				$upload_file = $this->upload->data();
+				$image_path = 'assets/penunjang/';
+				$image_path .= $upload_file['file_name'];
+				$image = base_url($image_path);
+				$data = $image;
+			}
+
+			return ['success' => $data];
+		}
 	}
 
 	public function delete(){
