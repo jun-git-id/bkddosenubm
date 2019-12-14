@@ -66,7 +66,7 @@ class Mengajar_model extends CI_Model {
 			'tahun_ajaran' 	=> $this->input->post('tahun_ajaran', true),
 			'id_matkul' 		=> $this->input->post('id_matkul', true),
 			'sks' 	        => $this->input->post('sks', true),
-			'sk' 			=> $this->input->post('sk_mengajar', true)
+			'sk_mengajar' 	=> $this->input->post('sk_mengajar', true)
 		];
 
 		if(empty($where['id_mengajar'])){
