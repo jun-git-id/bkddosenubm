@@ -37,7 +37,7 @@ class Login_model extends CI_Model {
                       ->get()
                       ->row_array();
 
-    if(empty($check['id_user'])) return ['result' => ['message' => 'Password lama tidak sesuai.]'];
+    if(empty($check['id_user'])) return ['result' => ['message' => 'Password lama tidak sesuai.']];
 
     $where = ['email' => $this->input->post('username')];
     $set   = ['password' => md5($this->input->post('new_password'))];
